@@ -49,4 +49,58 @@ export class ElementsPage {
   get permanentAddressOutput() {
     return this.page.locator('#output #permanentAddress');
   }
+
+  // CheckBox feature
+  get checkBoxOption() {
+    return this.page.getByRole('listitem').getByText('Check Box');
+  }
+
+  get expandAllButton() {
+    return this.page.getByRole('button', { name: 'Expand all' });
+  }
+
+  get collapseAllButton() {
+    return this.page.getByRole('button', { name: 'Collapse all' });
+  }
+
+  get homeCheckbox() {
+    return this.page.locator('label[for="tree-node-home"] .rct-checkbox');
+  }
+
+
+  // Actions
+  async goToCheckBox() {
+    await this.checkBoxOption.waitFor({ state: 'visible' });
+    await this.checkBoxOption.click();
+    await this.page.waitForLoadState('domcontentloaded');
+  }
+
+  async expandAll() {
+    await this.expandAllButton.waitFor({ state: 'visible' });
+    await this.expandAllButton.click();
+  }
+
+  async colapseAll() {
+    await this.collapseAllButton.waitFor({ state: 'visible' });
+    await this.collapseAllButton.click();
+  }
+
+  async tickHome() {
+    await this.homeCheckbox.click();
+  }
+
+  // Helper: check if Home is ticked
+  async isHomeChecked(): Promise<boolean> {
+    const stateIcon = this.page.locator('label[for="tree-node-home"] .rct-checkbox svg');
+    const classes = await stateIcon.getAttribute('class');
+    return classes?.includes('check') ?? false;
+  }
+
+  // Helper: check if Home is unticked
+  async isHomeUnchecked(): Promise<boolean> {
+    const stateIcon = this.page.locator('label[for="tree-node-home"] .rct-checkbox svg');
+    const classes = await stateIcon.getAttribute('class');
+    return classes?.includes('uncheck') ?? false;
+  }
+
 }
