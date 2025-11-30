@@ -67,6 +67,11 @@ export class ElementsPage {
     return this.page.locator('label[for="tree-node-home"] .rct-checkbox');
   }
 
+  // Expose the checkbox state icon as a Locator for assertions
+  get homeCheckboxIcon() {
+    return this.page.locator('label[for="tree-node-home"] .rct-checkbox svg');
+  }
+
 
   // Actions
   async goToCheckBox() {
@@ -80,7 +85,7 @@ export class ElementsPage {
     await this.expandAllButton.click();
   }
 
-  async colapseAll() {
+  async collapseAll() {
     await this.collapseAllButton.waitFor({ state: 'visible' });
     await this.collapseAllButton.click();
   }
@@ -91,15 +96,13 @@ export class ElementsPage {
 
   // Helper: check if Home is ticked
   async isHomeChecked(): Promise<boolean> {
-    const stateIcon = this.page.locator('label[for="tree-node-home"] .rct-checkbox svg');
-    const classes = await stateIcon.getAttribute('class');
+    const classes = await this.homeCheckboxIcon.getAttribute('class');
     return classes?.includes('check') ?? false;
   }
 
   // Helper: check if Home is unticked
   async isHomeUnchecked(): Promise<boolean> {
-    const stateIcon = this.page.locator('label[for="tree-node-home"] .rct-checkbox svg');
-    const classes = await stateIcon.getAttribute('class');
+    const classes = await this.homeCheckboxIcon.getAttribute('class');
     return classes?.includes('uncheck') ?? false;
   }
 

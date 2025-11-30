@@ -28,7 +28,7 @@ test.describe('ElementsPage - homeCheckbox', () => {
 
     test('collapse everything on click', async ({ page }) => {
     const elementsPage = new ElementsPage(page);
-    await elementsPage.colapseAll();
+    await elementsPage.collapseAll();
 
     });
 

@@ -13,19 +13,18 @@ test('CheckBox - expandir Home, tildar y destildar, colapsar', async ({ page }) 
 
   // Go to CheckBox page
   await elementsPage.goToCheckBox();
-
-  // Tick the Home checkbox
-  await elementsPage.tickHome();
-  await expect(await elementsPage.isHomeChecked()).toBeTruthy();
-
-  // Untick the Home checkbox
-  await elementsPage.tickHome();
-  await expect(await elementsPage.isHomeUnchecked()).toBeTruthy();
-
-   // Expand all nodes
+  // Expand all nodes (ensure tree is visible)
   await elementsPage.expandAll();
 
+  // Tick the Home checkbox and assert
+  await elementsPage.tickHome();
+  await expect(elementsPage.homeCheckboxIcon).toHaveClass(/check/);
+
+  // Untick the Home checkbox and assert
+  await elementsPage.tickHome();
+  await expect(elementsPage.homeCheckboxIcon).toHaveClass(/uncheck/);
+
   // Collapse all nodes
-   await elementsPage.colapseAll();
+  await elementsPage.collapseAll();
 
 });
